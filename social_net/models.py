@@ -16,7 +16,7 @@ class User(models.Model):
 
     def register(self):
         self.verified = True
-        p = Profile(user = self, registration_datetime = timezone.now())
+        p = Profile(user=self, registration_datetime=timezone.now())
         p.save(force_insert=True)
 
     def __str__(self):
@@ -43,10 +43,10 @@ class Profile(models.Model):
 # Message model contains all the messages of particular profile (many-to-one)
 
 class Message(models.Model):
-    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
-    sender_profile = models.OneToOneField('Profile')
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='message_profiles')
+    sender_profile = models.OneToOneField('Profile', related_name='message_sender_profile')
     datetime = models.DateTimeField()
-    text = models.CharField(max_length=255) # 255 chars is max message limit
+    text = models.CharField(max_length=255)  # 255 chars is max message limit
     read = models.BooleanField(default=False)
 
     class Meta:
@@ -59,8 +59,8 @@ class Message(models.Model):
 # Student list model connects student profile with teachers profiles (many-to-one)
 
 class StudentList(models.Model):
-    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
-    teacher_profile = models.ForeignKey('Profile')
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='student_list_profiles')
+    teacher_profile = models.ForeignKey('Profile', related_name='student_list_teacher_profiles')
 
     class Meta:
         db_table = "student_list"
@@ -72,8 +72,8 @@ class StudentList(models.Model):
 # Subscription model connects profile with subscriptions (many-to-one)
 
 class Subscription(models.Model):
-    profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
-    teacher_profile = models.ForeignKey('Profile')
+    profile = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='subscription_profiles')
+    teacher_profile = models.ForeignKey('Profile', related_name='subscription_teacher_profiles')
     topic = models.ForeignKey('Topic')
 
     class Meta:
@@ -103,7 +103,7 @@ class Comment(models.Model):
     parent = models.ForeignKey('Comment', blank=True, null=True)
     profile = models.ForeignKey('Profile', on_delete=models.CASCADE)
     datetime = models.DateTimeField()
-    text = models.CharField(max_length=255) # 255 chars is max comment limit
+    text = models.CharField(max_length=255)  # 255 chars is max comment limit
     read = models.BooleanField(default=False)
 
     class Meta:
