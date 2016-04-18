@@ -20,8 +20,18 @@
 
     {% for user in users %}
     <div>
-        <h2>{{ user }}</h2>
+        <h2>{{ user.name }} {{ user.last_name }}</h2>
     </div>
+    <div>
+        <h2>{{ user.profile.picture }}</h2>
+        <h2>{{ user.profile.description }}</h2>
+        <h2>{{ user.profile.additional_info }}</h2>
+        <h2>{{ user.profile.topic }}</h2>
+    </div>
+
+        <div>
+            <h1><a href="/">Follow</a></h1>
+        </div>
     {% endfor %}
 
 

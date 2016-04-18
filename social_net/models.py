@@ -20,7 +20,7 @@ class User(models.Model):
         p.save(force_insert=True)
 
     def __str__(self):
-        return self.name + " " + self.last_name
+        return self.name + " " + self.last_name + " " + self.email
 
 
 # Profile model contains additional information of a user (one-to-one)
@@ -37,7 +37,8 @@ class Profile(models.Model):
         db_table = "profile"
 
     def __str__(self):
-        return self.user.name + " " + self.user.last_name + " " + self.registration_date.strftime("%c")
+        return self.user.name + " " + self.user.last_name + " " + \
+               self.registration_datetime.strftime("%c")
 
 
 # Message model contains all the messages of particular profile (many-to-one)
