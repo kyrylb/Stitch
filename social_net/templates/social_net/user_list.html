@@ -26,12 +26,23 @@
         <h2>{{ user.profile.picture }}</h2>
         <h2>{{ user.profile.description }}</h2>
         <h2>{{ user.profile.additional_info }}</h2>
-        <h2>{{ user.profile.topic }}</h2>
+
+        {% for topic in user.profile.topic.all %}
+            {{ topic.name | linebreaks }}
+        {% endfor %}
+
     </div>
 
+    {% if user in subscription.all %}
+        <div>
+            <h1><a href="/">Unfollow</a></h1>
+        </div>
+    {% else %}
         <div>
             <h1><a href="/">Follow</a></h1>
         </div>
+    {% endif %}
+
     {% endfor %}
 
 

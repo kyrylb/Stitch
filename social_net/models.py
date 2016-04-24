@@ -9,7 +9,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=30)
     password = models.CharField(max_length=20)
     email = models.EmailField()
-    verified = models.BooleanField(default=False)
+    verified = models.BooleanField(default=False)   # True when email verification succeeded, new Profile record created
 
     class Meta:
         db_table = "user"
@@ -67,7 +67,7 @@ class StudentList(models.Model):
         db_table = "student_list"
 
     def __str__(self):
-        return self.profile + " " + self.teacher_profile
+        return self.profile.user.name + " " + self.teacher_profile.user.name
 
 
 # Subscription model connects profile with subscriptions (many-to-one)
@@ -81,7 +81,7 @@ class Subscription(models.Model):
         db_table = "subscription"
 
     def __str__(self):
-        return self.profile + " " + self.teacher_profile + " " + self.topic
+        return self.profile.user.name + " " + self.teacher_profile.user.name + " " + self.topic.name
 
 
 # Topic model contains topics with their description
@@ -158,4 +158,4 @@ class EducationalContent(models.Model):
         db_table = "educational_content"
 
     def __str__(self):
-        return self.topic + " " + self.name + " " + self.published
+        return self.topic.name + " " + self.name + " " + self.published
