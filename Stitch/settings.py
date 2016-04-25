@@ -69,6 +69,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'social_net/templates/social_net').replace('\\', '/'),
+)
+
 WSGI_APPLICATION = 'Stitch.wsgi.application'
 
 
