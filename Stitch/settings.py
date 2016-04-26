@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Stitch.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'social_net/templates/social_net').replace('\\', '/'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,9 +69,6 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'social_net/templates/social_net').replace('\\', '/'),
-)
 
 WSGI_APPLICATION = 'Stitch.wsgi.application'
 
