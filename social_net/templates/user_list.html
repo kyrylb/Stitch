@@ -23,8 +23,8 @@
     <script>
         $(document).ready(function(){
             $("button[name=infoBtn]").click(function(){
-                data_info = $(this).closest('tr').attr('data-info');
-                $("#infoModal").find(".c").text(data_info);
+                data_info = $(this).closest('tr').attr('data-info');    //find data-info custom tag
+                $("#infoModal").find(".c").text(data_info); //set new text
                 $("#infoModal").modal();
             });
         });
@@ -63,7 +63,17 @@
         </td>
         <td style="text-align: center;">
             {% if user.profile.picture %}
-                <img src="{{MEDIA_URL}}{{ user.profile.picture }}" style="width: 75px; height: 75px;" class="img-thumbnail" alt="Profile picture">
+                <div id="imageModal{{ user.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img src="{{MEDIA_URL}}{{ user.profile.picture }}" style="width: 400px; height: 400px;">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <img data-toggle="modal" data-target="#imageModal{{ user.id }}" src="{{MEDIA_URL}}{{ user.profile.picture }}" style="width: 75px; height: 75px;" class="img-thumbnail" alt="Profile picture" >
             {% else %}
                 <img data-src="holder.js/75x75?theme=social" class="img-thumbnail" alt="Profile picture">
             {% endif %}
@@ -123,6 +133,18 @@
 <!--
 
 
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Popup image</button>
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <img src="//placehold.it/1000x600" class="img-responsive">
+        </div>
+    </div>
+  </div>
+</div>
 
         {% for topic in user.profile.topic.all %}
             {{ topic.name | linebreaks }}
