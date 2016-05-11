@@ -6,15 +6,10 @@
     <meta name="description" content="Stitch - educational social network for everybody">
     <meta name="author" content="KyryloB">
 
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    {% include 'bootstrap_include.html' %}
-
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
 </head>
 <body>
-    <p>It's index page and it works!</p>
-
+    <a href="{% url social_net.views.home %}">Click to redirect</a>
 </body>
 </html>

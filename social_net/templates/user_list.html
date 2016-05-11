@@ -30,106 +30,169 @@
         });
     </script>
 
+    <link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+    <style>
+        .brand {
+            font-family: 'Lobster', cursive;
+            font-size: 36pt;
+        }
+
+        .bold-navfont {
+            font-weight:bold;
+            font-size:18px;
+        }
+
+        .navbar-bg-styled {
+            background-color: purple;
+        }
+
+    </style>
 </head>
 <body>
 
 
-<!-- Table -->
-<div class="col-md-6">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Topics</th>
-        <th>Picture</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for user in users %}
-      <tr id="{{ user.id }}" data-info="{{ user.profile.additional_info }}">
-        <td>{{ user.name }} {{ user.last_name }}</td>
-        <td>{{ user.profile.description }}<br>
-            <!-- <button type="button" name="infoBtn" class="btn btn-link" style="padding-left: 0px;" data-toggle="modal" data-target="#infoModal">Read more...</button> -->
-            {% if user.profile.additional_info %}
-                <button type="button" name="infoBtn" class="btn btn-link" style="padding-left: 0px;" >Read more...</button>
-            {% endif %}
-        </td>
-        <td>
-            {% for topic in user.profile.topic.all %}
-                {{ topic.name | linebreaks }}
-            {% endfor %}
-        </td>
-        <td style="text-align: center;">
-            {% if user.profile.picture %}
-                <div id="imageModal{{ user.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <img src="{{MEDIA_URL}}{{ user.profile.picture }}" style="width: 400px; height: 400px;">
-                        </div>
-                    </div>
-                  </div>
+	<header>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid navbar-bg-styled">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand brand" href="#">Stitch</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+              </ul>
+              <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search">
                 </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle bold-navfont" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Menu<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="accounts/logout/">Logout</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+	</header>
 
-                <img data-toggle="modal" data-target="#imageModal{{ user.id }}" src="{{MEDIA_URL}}{{ user.profile.picture }}" style="width: 75px; height: 75px;" class="img-thumbnail" alt="Profile picture" >
-            {% else %}
-                <img data-src="holder.js/75x75?theme=social" class="img-thumbnail" alt="Profile picture">
-            {% endif %}
-        </td>
-        <td style="padding-top: 13px;">
-            <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#followModal">Follow</button>
-        </td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-</div>
-</div>
+	<section id="content">
+        <!-- Table -->
+        <div class="col-md-6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Topics</th>
+                <th>Picture</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+              <tr id="{{ user.id }}" data-info="{{ user.profile.additional_info }}">
+                <td>{{ user.name }} {{ user.last_name }}</td>
+                <td>{{ user.profile.description }}<br>
+                    <!-- <button type="button" name="infoBtn" class="btn btn-link" style="padding-left: 0px;" data-toggle="modal" data-target="#infoModal">Read more...</button> -->
+                    {% if user.profile.additional_info %}
+                        <button type="button" name="infoBtn" class="btn btn-link" style="padding-left: 0px;" >Read more...</button>
+                    {% endif %}
+                </td>
+                <td>
+                    {% for topic in user.profile.topic.all %}
+                        {{ topic.name | linebreaks }}
+                    {% endfor %}
+                </td>
+                <td style="text-align: center;">
+                    {% if user.profile.picture %}
+                        <div id="imageModal{{ user.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="{{MEDIA_URL}}{{ user.profile.picture }}" style="width: 400px; height: 400px;">
+                                </div>
+                            </div>
+                          </div>
+                        </div>
 
-<!-- Additional info modal -->
-<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="infoModalLabel">Additional information</h4>
+                        <img data-toggle="modal" data-target="#imageModal{{ user.id }}" src="{{MEDIA_URL}}{{ user.profile.picture }}" style="width: 75px; height: 75px;" class="img-thumbnail" alt="Profile picture" >
+                    {% else %}
+                        <img data-src="holder.js/75x75?theme=social" class="img-thumbnail" alt="Profile picture">
+                    {% endif %}
+                </td>
+                <td style="padding-top: 13px;">
+                    <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#followModal">Follow</button>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+        <!-- Additional info modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="infoModalLabel">Additional information</h4>
+              </div>
+              <div class="c" style="padding: 10px;">
+                Lorem ipsum dolor sit amet
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Follow modal -->
+        <div class="modal fade" id="followModal" tabindex="-1" role="dialog" aria-labelledby="followModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="followModalLabel">Follow/unfollow this user?</h4>
+              </div>
+              <div class="modal-body">
+                Follow/unfollow this user?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted"><small>&copy; Copyright 2016, KyryloB</small></p>
       </div>
-      <div class="c" style="padding: 10px;">
-        Lorem ipsum dolor sit amet
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Follow modal -->
-<div class="modal fade" id="followModal" tabindex="-1" role="dialog" aria-labelledby="followModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="followModalLabel">Follow/unfollow this user?</h4>
-      </div>
-      <div class="modal-body">
-        Follow/unfollow this user?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
+    </footer>
 <!--
 
 
