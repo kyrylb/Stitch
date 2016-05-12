@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_net',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -129,3 +130,14 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'social_net/media')
 MEDIA_URL = '/media/'
+
+# Registration
+ACCOUNT_ACTIVATION_DAYS = 2
+
+AUTH_USER_EMAIL_UNIQUE = True
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'info@gmail.com'

@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^accounts/login/$', login),
     url(r'^accounts/logout/$', views.logout),
     url(r'^accounts/profile/$', views.profile),
+    url(r'^registration/profile/accounts/logout/$', views.logout),  # nasty hack so far
+
 # -----------------------
     url(r'^users/', views.user_list, name='user_list'),
     #url( r'^accounts/signup/$', signup ),

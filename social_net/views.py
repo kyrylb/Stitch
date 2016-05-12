@@ -15,7 +15,8 @@ def home(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/accounts/login')
     else:
-        return user_list(request)   # NYI
+        return profile(request)
+
 
 def logout(request):
     user = request.user
@@ -24,6 +25,9 @@ def logout(request):
 
 
 # -----------------------
+
+
+
 
 def user_list(request):
     """
